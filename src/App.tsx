@@ -20,7 +20,7 @@ export default function Page() {
         <AppSidebar />
         <SidebarInset>
           <AppHeader />
-          <div className="flex flex-1 flex-col gap-4 p-4">
+          <div className="flex h-[calc(100vh_-_164px)] overflow-y-auto flex-col gap-4 p-4">
             <RenderProfile />
           </div>
           <AppFooter />

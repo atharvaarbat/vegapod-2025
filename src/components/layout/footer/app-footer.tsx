@@ -8,7 +8,7 @@ import {
 } from "@/components/ui/tooltip"
 const AppFooter = () => {
     return (
-        <div className='flex  items-center gap-2 border-t p-4'>
+        <div className='flex h-16  items-center gap-2 border-t p-4'>
             <p className='text-sm text-muted-foreground'>Pod Position:</p>
             <div>
                 12m
