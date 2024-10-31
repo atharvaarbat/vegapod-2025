@@ -8,19 +8,26 @@ import AppHeader from "./components/layout/header/app-header"
 import General from "./profiles/GeneralProfile"
 import Levitation from "./profiles/LevitationProfile"
 import MotorProfile from "./profiles/MotorProfile"
+import AppMenubar from "./components/layout/menubar/app-menubar"
 
 export default function Page() {
   return (
-    <SidebarProvider>
-      <AppSidebar />
-      <SidebarInset>
-        <AppHeader />
-        <div className="flex flex-1 flex-col gap-4 p-4">
-          <RenderProfile />
-        </div>
-        <AppFooter />
-      </SidebarInset>
-    </SidebarProvider>
+    <>
+      <div className="absolute z-40">
+        <AppMenubar />
+      </div>
+      <SidebarProvider>
+        <AppSidebar />
+        <SidebarInset>
+          <AppHeader />
+          <div className="flex flex-1 flex-col gap-4 p-4">
+            <RenderProfile />
+          </div>
+          <AppFooter />
+        </SidebarInset>
+      </SidebarProvider>
+    </>
+
   )
 }
 

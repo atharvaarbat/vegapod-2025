@@ -147,6 +147,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   return (
     <Sidebar {...props}>
       <SidebarHeader>
+        <div className="h-7"/>
         <Logo/>
         <ProfileSwitcher
           profiles={data.versions}

@@ -1,38 +1,39 @@
-import * as React from "react"
-import { Check, ChevronsUpDown, GalleryVerticalEnd } from "lucide-react"
+import * as React from "react";
+import { Check, ChevronsUpDown, GalleryVerticalEnd } from "lucide-react";
 
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
+} from "@/components/ui/dropdown-menu";
 import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
-} from "@/components/ui/sidebar"
+} from "@/components/ui/sidebar";
+import useProfile from "@/hooks/useProfile"; // Import the custom hook
 
 export function ProfileSwitcher({
   profiles,
   defaultProfile,
 }: {
-  profiles: string[]
-  defaultProfile: string
+  profiles: string[];
+  defaultProfile: string;
 }) {
-  const [selectedProfile, setSelectedProfile] = React.useState(defaultProfile)
-  const onProfileSelect = (e: string) => {
-    setSelectedProfile(e);
-    localStorage.setItem('profile', e)
-    window.location.reload()
-  }
+  const { profile: selectedProfile, setProfile } = useProfile();
+
   React.useEffect(() => {
-    if (localStorage.getItem('profile')) {
-      setSelectedProfile(localStorage.getItem('profile') as string)
-    } else {
-      onProfileSelect(defaultProfile)
+    if (!selectedProfile) {
+      setProfile(defaultProfile); // Set the default profile if none is selected
     }
-  }, [])
+  }, [selectedProfile, defaultProfile, setProfile]);
+
+  const onProfileSelect = (profile: string) => {
+    setProfile(profile);
+    window.location.reload(); // Reload the page on profile change
+  };
+
   return (
     <SidebarMenu>
       <SidebarMenuItem>
@@ -69,5 +70,5 @@ export function ProfileSwitcher({
         </DropdownMenu>
       </SidebarMenuItem>
     </SidebarMenu>
-  )
+  );
 }
