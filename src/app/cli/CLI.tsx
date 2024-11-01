@@ -14,7 +14,7 @@ const CLI: React.FC = () => {
             </div>
             <div className="p-4 font-mono text-sm">
                 {lines.map((line, index) => (
-                    <div key={index}><span className='text-muted-foreground'>[{formatISO(new Date(), { representation: 'time' })}] </span>  {line}</div>
+                    <div key={index}><span className='text-muted-foreground'>[{formatISO(line.tt, { representation: 'time' })}] </span>  {line.text}</div>
                 ))}
             </div>
         </div>

@@ -9,14 +9,17 @@ import General from "./profiles/GeneralProfile"
 import Levitation from "./profiles/LevitationProfile"
 import MotorProfile from "./profiles/MotorProfile"
 import AppMenubar from "./components/layout/menubar/app-menubar"
+import { useContext } from "react"
+import DataContext from "./lib/context"
 
 export default function Page() {
   return (
     <>
+    <SidebarProvider>
       <div className="absolute z-40">
         <AppMenubar />
       </div>
-      <SidebarProvider>
+      
         <AppSidebar />
         <SidebarInset>
           <AppHeader />
@@ -33,7 +36,7 @@ export default function Page() {
 
 
 const RenderProfile = () => {
-  const profile = localStorage.getItem('profile') || 'General'
+  const {profile} = useContext(DataContext);
   if (profile === 'General') {
     return <General />
   } else if (profile === 'Levitation-test') {

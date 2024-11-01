@@ -1,20 +1,18 @@
-import { useEffect, useState, useRef, useCallback } from 'react';
+import { useEffect, useState, useRef, useCallback, useContext } from 'react';
+import DataContext from './context';
+import useTerminal from '@/hooks/useTerminal';
 
 interface UseWebSocketReturn {
-  rawData: Array<Record<string, any>>;
-  currentData: Record<string, any> | null;
   connect: () => void;
   disconnect: () => void;
   sendData: (data: Record<string, any>) => void;
   togglePause: () => void;
-  isConnected: boolean;
   isPaused: boolean;
 }
 
 const useWebSocket = (url: string): UseWebSocketReturn => {
-  const [rawData, setRawData] = useState<Array<Record<string, any>>>([]);
-  const [currentData, setCurrentData] = useState<Record<string, any> | null>(null);
-  const [isConnected, setIsConnected] = useState(false);
+  const {printLine} = useTerminal();
+  const { setRawData, setCurrentData, setIsConnected } = useContext(DataContext);
   const [isPaused, setIsPaused] = useState(false); // New state for pausing data reception
   const [transmitInterval, setTransmitInterval] = useState<NodeJS.Timeout | null>(null);
 
@@ -30,6 +28,8 @@ const useWebSocket = (url: string): UseWebSocketReturn => {
     
     ws.onopen = () => {
         console.log('WebSocket connection opened');
+        printLine("WebSocket connection opened");
+        setIsConnected(true);
         setIsConnected(true);
       
         // Start transmitting data every second (or your desired frequency)
@@ -56,7 +56,7 @@ const useWebSocket = (url: string): UseWebSocketReturn => {
     ws.onclose = () => {
         console.log('WebSocket connection closed');
         setIsConnected(false);
-      
+
         if (transmitInterval) {
           clearInterval(transmitInterval); // Stop sending data
           setTransmitInterval(null);
@@ -64,6 +64,7 @@ const useWebSocket = (url: string): UseWebSocketReturn => {
       };
     ws.onerror = (error) => {
       console.error("WebSocket error:", error);
+      printLine("WebSocket error:", 'error');
     };
   }, [url, isPaused]);
 
@@ -73,6 +74,7 @@ const useWebSocket = (url: string): UseWebSocketReturn => {
       wsRef.current.close();
       wsRef.current = null;
       setIsConnected(false);
+      printLine("WebSocket connection closed");
     }
   }, []);
 
@@ -82,6 +84,7 @@ const useWebSocket = (url: string): UseWebSocketReturn => {
       wsRef.current.send(JSON.stringify(data));
     } else {
       console.error("WebSocket is not open. Cannot send data.");
+      printLine("WebSocket is not open. Cannot send data.", 'error');
     }
   }, []);
 
@@ -99,7 +102,8 @@ const useWebSocket = (url: string): UseWebSocketReturn => {
     };
   }, []);
 
-  return { rawData, currentData, connect, disconnect, sendData, togglePause, isConnected, isPaused };
+  return { connect, disconnect, sendData, togglePause, isPaused };
 };
 
 export default useWebSocket;
+ 

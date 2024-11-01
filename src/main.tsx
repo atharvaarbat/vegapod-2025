@@ -11,6 +11,7 @@ import {
   RouterProvider,
 } from "react-router-dom";
 import CLI from './app/cli/CLI.tsx'
+import { DataProvider } from './lib/context.tsx'
 
 
 const router = createBrowserRouter([
@@ -28,8 +29,10 @@ createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <ThemeProvider>
       <TooltipProvider>
-        <RouterProvider router={router} />
-        <Toaster/>
+        <DataProvider>
+          <RouterProvider router={router} />
+          <Toaster />
+        </DataProvider>
       </TooltipProvider>
     </ThemeProvider>
   </StrictMode>,

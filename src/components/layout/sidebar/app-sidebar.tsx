@@ -1,6 +1,6 @@
 import * as React from "react"
 
-import { ProfileSwitcher } from "@/components/layout/sidebar/version-switcher"
+import { ProfileSwitcher } from "@/components/layout/sidebar/profile-switcher"
 import {
   Sidebar,
   SidebarContent,
@@ -12,7 +12,7 @@ import {
 import Logo from "./Logo"
 
 // This is sample data.
-const data = {
+export const appData = {
   versions: ["General", "Levitation-test", "Motor-test"],
   navMain: [
     {
@@ -149,10 +149,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       <SidebarHeader>
         <div className="h-7"/>
         <Logo/>
-        <ProfileSwitcher
-          profiles={data.versions}
-          defaultProfile={data.versions[0]}
-        />
+        <ProfileSwitcher profiles={appData.versions}/>
         
       </SidebarHeader>
       <SidebarContent>

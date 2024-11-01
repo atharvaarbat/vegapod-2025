@@ -12,26 +12,19 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
-import useProfile from "@/hooks/useProfile"; // Import the custom hook
+import DataContext from "@/lib/context";
 
 export function ProfileSwitcher({
-  profiles,
-  defaultProfile,
+  profiles
 }: {
   profiles: string[];
-  defaultProfile: string;
 }) {
-  const { profile: selectedProfile, setProfile } = useProfile();
+  const { profile, setProfile } = React.useContext(DataContext);
 
-  React.useEffect(() => {
-    if (!selectedProfile) {
-      setProfile(defaultProfile); // Set the default profile if none is selected
-    }
-  }, [selectedProfile, defaultProfile, setProfile]);
+  
 
   const onProfileSelect = (profile: string) => {
     setProfile(profile);
-    window.location.reload(); // Reload the page on profile change
   };
 
   return (
@@ -48,7 +41,7 @@ export function ProfileSwitcher({
               </div>
               <div className="flex flex-col gap-0.5 leading-none">
                 <span className="text-xs text-muted-foreground">Profile</span>
-                <span className="">{selectedProfile}</span>
+                <span className="">{profile}</span>
               </div>
               <ChevronsUpDown className="ml-auto" />
             </SidebarMenuButton>
@@ -57,13 +50,13 @@ export function ProfileSwitcher({
             className="w-[--radix-dropdown-menu-trigger-width]"
             align="start"
           >
-            {profiles.map((profile) => (
+            {profiles.map((item, index) => (
               <DropdownMenuItem
-                key={profile}
-                onSelect={() => onProfileSelect(profile)}
+                key={index}
+                onSelect={() => onProfileSelect(item)}
               >
-                {profile}
-                {profile === selectedProfile && <Check className="ml-auto" />}
+                {item}
+                {item === profile && <Check className="ml-auto" />}
               </DropdownMenuItem>
             ))}
           </DropdownMenuContent>
