@@ -46,8 +46,8 @@ const PodVector = () => {
             <path d="M31.3469 1.40799C45.4522 -2.14939 64.3199 1.5726 68.3793 6.58017L71 15H9.94553L4 6.58016C17.4902 5.0178 13.7154 5.85471 31.3469 1.40799Z" className='fill-[#191716] dark:fill-white' />
         </g>
         <defs>
-            <filter id="filter0_d_631_251" x="0" y="0" width="75" height="23" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
-                <feFlood flood-opacity="0" result="BackgroundImageFix" />
+            <filter id="filter0_d_631_251" x="0" y="0" width="75" height="23" filterUnits="userSpaceOnUse" colorInterpolationFilters="sRGB">
+                <feFlood floodOpacity="0" result="BackgroundImageFix" />
                 <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha" />
                 <feOffset dy="4" />
                 <feGaussianBlur stdDeviation="2" />
