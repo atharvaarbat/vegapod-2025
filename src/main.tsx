@@ -25,16 +25,19 @@ import { DataProvider } from './lib/context.tsx'
 //   }
 // ]);
 
+
+
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <ThemeProvider>
-      <TooltipProvider>
-        <DataProvider>
-          {/* <RouterProvider router={router} /> */}
-          <App />
-          <Toaster />
-        </DataProvider>
-      </TooltipProvider>
-    </ThemeProvider>
-  </StrictMode>,
+      <ThemeProvider>
+        <TooltipProvider>
+          <DataProvider>
+            {/* <RouterProvider router={router} /> */}
+            <App />
+            <Toaster />
+          </DataProvider>
+        </TooltipProvider>
+      </ThemeProvider>
+    </StrictMode>,
 )
+

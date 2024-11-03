@@ -13,7 +13,7 @@ import Logo from "./Logo"
 
 // This is sample data.
 export const appData = {
-  versions: ["General", "Levitation-test", "Motor-test"],
+  versions: ["General", "Levitation-test", "Motor-test", "Terminal"],
   navMain: [
     {
       title: "Getting Started",

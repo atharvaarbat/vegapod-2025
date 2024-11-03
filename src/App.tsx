@@ -11,6 +11,7 @@ import MotorProfile from "./profiles/MotorProfile"
 import AppMenubar from "./components/layout/menubar/app-menubar"
 import { useContext } from "react"
 import DataContext from "./lib/context"
+import CLI from "./app/cli/CLI"
 
 export default function Page() {
   return (
@@ -43,5 +44,7 @@ const RenderProfile = () => {
     return <Levitation />
   } else if (profile === 'Motor-test') {
     return <MotorProfile />
+  } else if (profile === 'Terminal') {
+    return <CLI />
   }
 }

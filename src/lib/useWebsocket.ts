@@ -1,6 +1,7 @@
 import { useEffect, useState, useRef, useCallback, useContext } from 'react';
 import DataContext from './context';
 import useTerminal from '@/hooks/useTerminal';
+import useSaveData from '@/hooks/useSaveData';
 
 interface UseWebSocketReturn {
   connect: () => void;
@@ -15,7 +16,7 @@ const useWebSocket = (url: string): UseWebSocketReturn => {
   const { setRawData, setCurrentData, setIsConnected } = useContext(DataContext);
   const [isPaused, setIsPaused] = useState(false); // New state for pausing data reception
   const [transmitInterval, setTransmitInterval] = useState<NodeJS.Timeout | null>(null);
-
+  const {saveData} = useSaveData();
   const wsRef = useRef<WebSocket | null>(null);
 
   // Connect to the WebSocket server
@@ -46,6 +47,7 @@ const useWebSocket = (url: string): UseWebSocketReturn => {
           const data = JSON.parse(event.data);
           setRawData((prevData) => [...prevData, data]);
           setCurrentData(data);
+          saveData(Date.now().toString(), data, '123', 'General');
         } catch (error) {
           console.error("Error parsing WebSocket data:", error);
         }

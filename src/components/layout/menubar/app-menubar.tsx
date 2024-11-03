@@ -17,7 +17,7 @@ import { SwitchProfile } from "./Profiles/SwitchProfile"
 
 export default function AppMenubar() {
   return (
-    <Menubar className="w-screen border-0 border-b" >
+    <Menubar className="w-screen border-0 border-b rounded-none" >
       <p className='pl-2 text-xs text-muted-foreground'>Vegapod GUI</p>
       <MenubarMenu>
         <MenubarTrigger>File</MenubarTrigger>
@@ -122,9 +122,7 @@ export default function AppMenubar() {
           <MenubarItem>Paste</MenubarItem>
         </MenubarContent>
       </MenubarMenu>
-      <div className=' titlebar h-full'>
-
-      </div>
+      <div className=' titlebar h-full'/>
     </Menubar>
   )
 }

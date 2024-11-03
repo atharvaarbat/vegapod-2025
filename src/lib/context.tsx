@@ -1,4 +1,46 @@
 import { createContext, useState, ReactNode, Dispatch, SetStateAction } from "react";
+import { BatteryWarning, Thermometer, Wind, Zap } from "lucide-react";
+
+// Define the types for the context values
+interface AppState {
+  setupOpen: boolean;
+  runOpen: boolean;
+  logPage: boolean;
+}
+
+// Define possible statuses for the header errors
+export type ErrorStatus = "warning" | "error" | "normal";
+
+// Define the structure of each header error detail
+interface ErrorDetail {
+  name: string;
+  status: ErrorStatus;
+  icon: JSX.Element;
+}
+
+// Define the structure of headerErrors, which is an object with keys as strings and values as ErrorDetail
+type HeaderErrors = Record<string, ErrorDetail>;
+
+interface DataContextType {
+  rawData: any[];
+  setRawData: Dispatch<SetStateAction<any[]>>;
+  currentData: any[];
+  setCurrentData: Dispatch<SetStateAction<any[]>>;
+  isConnected: boolean;
+  setIsConnected: Dispatch<SetStateAction<boolean>>;
+  ws: WebSocket | null;
+  setWs: Dispatch<SetStateAction<WebSocket | null>>;
+  appState: AppState;
+  setAppState: Dispatch<SetStateAction<AppState>>;
+  headerErrors: HeaderErrors;
+  setHeaderErrors: Dispatch<SetStateAction<HeaderErrors>>;
+  profile: string;
+  setProfile: Dispatch<SetStateAction<string>>;
+}
+
+interface DataProviderProps {
+  children: ReactNode;
+}
 
 // Create the context with default values
 const DataContext = createContext<DataContextType>({} as DataContextType);
@@ -14,11 +56,28 @@ export const DataProvider = ({ children }: DataProviderProps) => {
     runOpen: false,
     logPage: false,
   });
+
   const [headerErrors, setHeaderErrors] = useState<HeaderErrors>({
-    temprature: true,
-    voltage: true,
-    bms: true,
-    pressure: true,
+    temprature: {
+      name: "Temprature",
+      status: "warning",
+      icon: <Thermometer size={22} />,
+    },
+    voltage: {
+      name: "Voltage",
+      status: "error",
+      icon: <BatteryWarning size={22} />,
+    },
+    bms: {
+      name: "BMS",
+      status: "normal",
+      icon: <Wind size={22} />,
+    },
+    pressure: {
+      name: "Pressure",
+      status: "normal",
+      icon: <Zap size={22} />,
+    },
   });
 
   return (
@@ -37,7 +96,7 @@ export const DataProvider = ({ children }: DataProviderProps) => {
         headerErrors,
         setHeaderErrors,
         profile,
-        setProfile
+        setProfile,
       }}
     >
       {children}
@@ -46,37 +105,3 @@ export const DataProvider = ({ children }: DataProviderProps) => {
 };
 
 export default DataContext;
-
-// Define the types for the context values
-interface AppState {
-  setupOpen: boolean;
-  runOpen: boolean;
-  logPage: boolean;
-}
-
-interface HeaderErrors {
-  temprature: boolean;
-  voltage: boolean;
-  bms: boolean;
-  pressure: boolean;
-}
-
-interface DataContextType {
-  rawData: any[];
-  setRawData: Dispatch<SetStateAction<any[]>>;
-  currentData: any[];
-  setCurrentData: Dispatch<SetStateAction<any[]>>;
-  isConnected: boolean;
-  setIsConnected: Dispatch<SetStateAction<boolean>>;
-  ws: WebSocket | null;
-  setWs: Dispatch<SetStateAction<WebSocket | null>>;
-  appState: AppState;
-  setAppState: Dispatch<SetStateAction<AppState>>;
-  headerErrors: HeaderErrors;
-  setHeaderErrors: Dispatch<SetStateAction<HeaderErrors>>;
-  profile: string;
-  setProfile: Dispatch<SetStateAction<string>>
-}
-interface DataProviderProps {
-  children: ReactNode;
-}
