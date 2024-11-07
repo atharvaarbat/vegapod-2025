@@ -1,4 +1,4 @@
-import Indicator from "./indicator"
+import Indicator from "./Indicator"
 import DataContext from "@/lib/context";
 import { useContext } from "react";
 

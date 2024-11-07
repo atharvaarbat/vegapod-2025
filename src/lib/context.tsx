@@ -1,4 +1,4 @@
-import { createContext, useState, ReactNode, Dispatch, SetStateAction } from "react";
+import { createContext, useState, ReactNode, Dispatch, SetStateAction, useEffect } from "react";
 import { BatteryWarning, Thermometer, Wind, Zap } from "lucide-react";
 
 // Define the types for the context values
@@ -28,8 +28,10 @@ interface DataContextType {
   setCurrentData: Dispatch<SetStateAction<any[]>>;
   isConnected: boolean;
   setIsConnected: Dispatch<SetStateAction<boolean>>;
-  ws: WebSocket | null;
-  setWs: Dispatch<SetStateAction<WebSocket | null>>;
+  ws: any;
+  setWs: Dispatch<SetStateAction<any>>;
+  // wsRef: any;
+  // setWsRef: Dispatch<SetStateAction<any>>;
   appState: AppState;
   setAppState: Dispatch<SetStateAction<AppState>>;
   headerErrors: HeaderErrors;
@@ -50,6 +52,13 @@ export const DataProvider = ({ children }: DataProviderProps) => {
   const [currentData, setCurrentData] = useState<any[]>([]);
   const [isConnected, setIsConnected] = useState<boolean>(false);
   const [ws, setWs] = useState<WebSocket | null>(null);
+  // useEffect(() => {
+  //   // const myWs
+  //   setWs(new WebSocket("ws://172.20.10.2/ws"));
+  //   // const MyRef = useRef<WebSocket | null>(null);
+  //   // MyRef.current = myWs;
+  //   // setWsRef(MyRef);
+  // }, [])
   const [profile, setProfile] = useState<string>(localStorage.getItem('profile') || 'General');
   const [appState, setAppState] = useState<AppState>({
     setupOpen: false,

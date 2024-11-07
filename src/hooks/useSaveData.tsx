@@ -35,7 +35,7 @@ const useSaveData = () => {
 
   // Save data entry with IndexedDB
   const saveData = useCallback(
-    async (tt: string, data: Record<string, any>, runId: string, profileName: string) => {
+    async (tt: string, data: Record<string, any>, profileName: string) => {
       if (!db) return;
 
       const tx = db.transaction('runs', 'readwrite');

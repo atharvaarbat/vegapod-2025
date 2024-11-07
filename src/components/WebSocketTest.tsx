@@ -1,10 +1,10 @@
 import React, { useContext, useState } from 'react';
-import useWebSocket from '@/lib/useWebsocket';
+import useWebSocket from '@/lib/useWebsocket3';
 import DataContext from '@/lib/context';
 
 const WebSocketComponent: React.FC = () => {
-  const { connect, disconnect, sendData, togglePause, isPaused } = useWebSocket("ws://localhost:8080");
   const {currentData, rawData, isConnected} = useContext(DataContext);
+  const { connect, disconnect, sendData, togglePause, isPaused } = useWebSocket();
   const [message, setMessage] = useState("");
 
   const handleSend = () => {
@@ -17,13 +17,13 @@ const WebSocketComponent: React.FC = () => {
   return (
     <div>
       <h1>WebSocket Connection</h1>
-      <button onClick={connect} disabled={isConnected || false}>
+      <button onClick={connect} >
         Connect
       </button>
-      <button onClick={disconnect} disabled={!isConnected}>
+      <button onClick={disconnect} >
         Disconnect
       </button>
-      <button onClick={togglePause} disabled={!isConnected}>
+      <button onClick={togglePause} >
         {isPaused ? "Resume Receiving Data" : "Pause Receiving Data"}
       </button>
       <div>
@@ -33,7 +33,7 @@ const WebSocketComponent: React.FC = () => {
           onChange={(e) => setMessage(e.target.value)}
           placeholder="Enter message"
         />
-        <button onClick={handleSend} disabled={!isConnected}>
+        <button onClick={handleSend} >
           Send Message
         </button>
       </div>
@@ -44,6 +44,7 @@ const WebSocketComponent: React.FC = () => {
 
       <h2>Current Data</h2>
       <pre>{JSON.stringify(currentData, null, 2)}</pre>
+      {/* {currentData} */}
 
       <h3>All Data Received</h3>
       <ul>

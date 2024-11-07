@@ -1,19 +1,10 @@
 import './style.css'
-import {
-  Menubar,
-  MenubarContent,
-  MenubarItem,
-  MenubarMenu,
-  MenubarSeparator,
-  MenubarShortcut,
-  MenubarSub,
-  MenubarSubContent,
-  MenubarSubTrigger,
-  MenubarTrigger,
-} from "@/components/ui/menubar"
+import { Menubar, MenubarContent, MenubarItem, MenubarMenu, MenubarSeparator, MenubarShortcut, MenubarSub, MenubarSubContent, MenubarSubTrigger, MenubarTrigger } from "@/components/ui/menubar"
 import { ThemeSwitch } from "./View/theme"
 import { SidebarToggle } from "./View/sidebar"
 import { SwitchProfile } from "./Profiles/SwitchProfile"
+import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog"
+import SetIP from '@/app/modals/SetIP'
 
 export default function AppMenubar() {
   return (
@@ -73,7 +64,7 @@ export default function AppMenubar() {
       <MenubarMenu>
         <MenubarTrigger>View</MenubarTrigger>
         <MenubarContent>
-          <ThemeSwitch/>
+          <ThemeSwitch />
           <MenubarItem onClick={() => window.location.reload()}>
             Reload <MenubarShortcut>⌘R</MenubarShortcut>
           </MenubarItem>
@@ -83,17 +74,52 @@ export default function AppMenubar() {
           <MenubarSeparator />
           <MenubarItem >Toggle Fullscreen</MenubarItem>
           <MenubarSeparator />
-          <SidebarToggle/>
+          <SidebarToggle />
         </MenubarContent>
       </MenubarMenu>
       <MenubarMenu>
         <MenubarTrigger>Profiles</MenubarTrigger>
         <MenubarContent>
-          <SwitchProfile/>
+          <SwitchProfile />
           <MenubarSeparator />
           <MenubarItem inset>Edit...</MenubarItem>
           <MenubarSeparator />
           <MenubarItem inset>Add Profile...</MenubarItem>
+        </MenubarContent>
+      </MenubarMenu>
+      <MenubarMenu>
+        <MenubarTrigger>Setup</MenubarTrigger>
+        <MenubarContent>
+          
+          <Dialog>
+            <DialogTrigger className='w-full hover:bg-muted rounded'>
+              <MenubarItem className='pointer-events-none'>
+                IP Setting
+              </MenubarItem>
+            </DialogTrigger>
+            <DialogContent>
+              <SetIP />
+            </DialogContent>
+          </Dialog>
+
+          <MenubarItem>
+            Redo <MenubarShortcut>⇧⌘Z</MenubarShortcut>
+          </MenubarItem>
+          <MenubarSeparator />
+          <MenubarSub>
+            <MenubarSubTrigger>Find</MenubarSubTrigger>
+            <MenubarSubContent>
+              <MenubarItem>Search the web</MenubarItem>
+              <MenubarSeparator />
+              <MenubarItem>Find...</MenubarItem>
+              <MenubarItem>Find Next</MenubarItem>
+              <MenubarItem>Find Previous</MenubarItem>
+            </MenubarSubContent>
+          </MenubarSub>
+          <MenubarSeparator />
+          <MenubarItem>Cut</MenubarItem>
+          <MenubarItem>Copy</MenubarItem>
+          <MenubarItem>Paste</MenubarItem>
         </MenubarContent>
       </MenubarMenu>
       <MenubarMenu>
@@ -122,7 +148,9 @@ export default function AppMenubar() {
           <MenubarItem>Paste</MenubarItem>
         </MenubarContent>
       </MenubarMenu>
-      <div className=' titlebar h-full'/>
+
+      <div className=' titlebar h-full' />
     </Menubar>
+
   )
 }

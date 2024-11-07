@@ -1,7 +1,7 @@
 import { useEffect, useState, useRef, useCallback, useContext } from 'react';
 import DataContext from './context';
 import useTerminal from '@/hooks/useTerminal';
-import useSaveData from '@/hooks/useSaveData';
+// import useSaveData from '@/hooks/useSaveData';
 
 interface UseWebSocketReturn {
   connect: () => void;
@@ -13,41 +13,45 @@ interface UseWebSocketReturn {
 
 const useWebSocket = (url: string): UseWebSocketReturn => {
   const {printLine} = useTerminal();
-  const { setRawData, setCurrentData, setIsConnected } = useContext(DataContext);
+  const { setRawData, setCurrentData, setIsConnected, ws, setWs } = useContext(DataContext);
   const [isPaused, setIsPaused] = useState(false); // New state for pausing data reception
   const [transmitInterval, setTransmitInterval] = useState<NodeJS.Timeout | null>(null);
-  const {saveData} = useSaveData();
+  // const {saveData} = useSaveData();
   const wsRef = useRef<WebSocket | null>(null);
 
   // Connect to the WebSocket server
   const connect = useCallback(() => {
     if (wsRef.current) return; // Avoid multiple connections
 
-    const ws = new WebSocket(url);
+    const newws = new WebSocket(url);
+    setWs(newws);
     wsRef.current = ws;
 
     
-    ws.onopen = () => {
+    newws.onopen = () => {
         console.log('WebSocket connection opened');
         printLine("WebSocket connection opened");
         setIsConnected(true);
         setIsConnected(true);
       
         // Start transmitting data every second (or your desired frequency)
-        const interval = setInterval(() => {
-            const sendDataItems = localStorage.getItem("controlData");
-          ws.send(JSON.stringify({ message: sendDataItems })); // Replace with your data
-        }, 1000); // Frequency in milliseconds
+        // const interval = setInterval(() => {
+        //     const sendDataItems = localStorage.getItem("controlData");
+        //   ws.send(JSON.stringify({ message: sendDataItems })); // Replace with your data
+        // }, 1000); // Frequency in milliseconds
       
-        setTransmitInterval(interval);
+        // setTransmitInterval(interval);
       };
-    ws.onmessage = (event) => {
+    newws.onmessage = (event:any) => {
       if (!isPaused) {
         try {
-          const data = JSON.parse(event.data);
+          let replaced = event.data?.replace(/'/g, "\"");
+
+          const data = JSON.parse(replaced);
           setRawData((prevData) => [...prevData, data]);
           setCurrentData(data);
-          saveData(Date.now().toString(), data, '123', 'General');
+          console.log(data);
+          //saveData(Date.now().toString(), data, '123');
         } catch (error) {
           console.error("Error parsing WebSocket data:", error);
         }
@@ -55,8 +59,9 @@ const useWebSocket = (url: string): UseWebSocketReturn => {
     };
 
     
-    ws.onclose = () => {
-        console.log('WebSocket connection closed');
+    newws.onclose = (e:any) => {
+        console.log('WebSocket connection closed', e);
+
         setIsConnected(false);
 
         if (transmitInterval) {
@@ -64,7 +69,7 @@ const useWebSocket = (url: string): UseWebSocketReturn => {
           setTransmitInterval(null);
         }
       };
-    ws.onerror = (error) => {
+    newws.onerror = (error:any) => {
       console.error("WebSocket error:", error);
       printLine("WebSocket error:", 'error');
     };

@@ -1,0 +1,54 @@
+{
+    "vehicleId": "VAJRA-2025",
+    "vehicleStatus": "Working | Error | Warning",
+    "vehicleState": "Idle | Active | Demo | Emergency",
+    "data": {
+        "location": {
+            "latitude": 37.7749,
+            "longitude": -122.4194,
+            "altitude": 10.5
+        },
+        "speed": 120.3,
+        "acceleration": 1.7,
+        "braking": {
+            "status": "active",
+            "deceleration": 2.5
+        },
+        "powerSystem": {
+            "voltage": 480,
+            "current": 75,
+            "batteryLevel": 82
+        },
+        "environment": {
+            "airPressure": 96.2,
+            "airTemperature": 22.4,
+            "humidity": 65
+        },
+        "diagnostics": {
+            "motorStatus": "normal",
+            "brakeStatus": "normal",
+            "sensorStatus": "normal"
+        }
+    },
+    "VCUstate": {
+        "VCU1": "Connected",
+        "VCU2": "Disconnected",
+        "VCU3": "Error",
+        "VCU4": "Connected"
+    }
+}
+
+
+
+Idle state:
+– The SDC is open.
+– The emergency brakes are deployed.
+• (HV) Active state:
+– The SDC is closed.
+– The emergency brakes are deployed.
+• Demo state:
+– The SDC is closed.
+– The emergency brakes are retracted / not deployed.
+• Emergency State:
+– The SDC is open.
+– The emergency brakes are deployed.

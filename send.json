@@ -1,0 +1,15 @@
+{
+    "type":"CONTROL",
+    "vehicleId": "VAJRA-2025",
+    "setState": "Idle | Active | Demo | Emergency",
+    "data": {
+        "run": 1,
+        "brake": 0
+    }
+}
+
+{
+    "type":"EMERGENCY_STOP",
+    "vehicleId": "VAJRA-2025",
+}
+
